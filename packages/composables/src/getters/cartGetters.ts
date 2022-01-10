@@ -6,42 +6,39 @@ import {
   AgnosticDiscount,
   AgnosticAttribute
 } from '@vue-storefront/core';
-import type { Cart, CartItem } from '@vue-storefront/__replace_me__-api';
+import type { Cart, CartItem } from '@vue-storefront/vsfDapPim-api';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getItems(cart: Cart): CartItem[] {
-  return [
-    {}
-  ];
+  return cart.items;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getItemName(item: CartItem): string {
-  return 'Name';
+  const product = item.offer.product
+  return `${product.manufacturer} ${product.category}`;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getItemImage(item: CartItem): string {
-  return 'https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg';
+  return item.offer.product.images[0];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getItemPrice(item: CartItem): AgnosticPrice {
   return {
-    regular: 12,
-    special: 10
+    regular: item.offer.price
   };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getItemQty(item: CartItem): number {
-  return 1;
+  return item.count;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getItemAttributes(item: CartItem, filterByAttributeName?: Array<string>): Record<string, AgnosticAttribute | string> {
   return {
-    color: 'red'
   };
 }
 
@@ -52,10 +49,13 @@ function getItemSku(item: CartItem): string {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getTotals(cart: Cart): AgnosticTotals {
+  const total = cart.items.reduce((sum, item) => {
+    return sum + item.offer.price * item.count
+  }, 0)
   return {
-    total: 12,
-    subtotal: 12,
-    special: 10
+    total: total,
+    subtotal: total,
+    special: total
   };
 }
 
@@ -66,7 +66,9 @@ function getShippingPrice(cart: Cart): number {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getTotalItems(cart: Cart): number {
-  return 1;
+  return cart.items.reduce((total, item) => {
+      return total + item.count;
+  }, 0);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -11,7 +11,9 @@ const factoryParams = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   search: async (context: Context, params: FacetSearchResult<SearchParams>) => {
     console.log('Mocked: useFacet.search');
-    return {};
+    return {
+      products: await context.$vsfDapPim.api.getProducts()
+    };
   }
 };
 

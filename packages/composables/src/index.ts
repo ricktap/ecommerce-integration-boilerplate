@@ -17,6 +17,8 @@ export { useUserOrder } from './useUserOrder';
 export { useUserShipping } from './useUserShipping';
 export { useWishlist } from './useWishlist';
 
+export { useVehicleSelection } from './useVehicleSelection';
+
 // Getters
 export { cartGetters } from './getters/cartGetters';
 export { categoryGetters } from './getters/categoryGetters';

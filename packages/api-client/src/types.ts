@@ -6,9 +6,39 @@ export type Endpoints = TODO;
 
 export type BillingAddress = TODO;
 
-export type Cart = TODO;
+export type Manufacturer = {
+    id: number,
+    name: string
+}
 
-export type CartItem = TODO;
+export type Series = {
+    id: number,
+    name: string,
+    manufacturerId: number,
+}
+
+export type Model = {
+    id: number,
+    name: string,
+    seriesId: number,
+}
+
+export declare type Offer = {
+    id: number,
+    product?: Product,
+    price: number,
+    vendorId: 1
+}
+
+export declare type Cart = {
+    items: Array<CartItem>
+};
+
+export type CartItem = {
+    id: number,
+    offer: Offer,
+    count: number
+};
 
 export type Category = TODO;
 
@@ -24,7 +54,15 @@ export type OrderItem = TODO;
 
 export type PasswordResetResult = TODO;
 
-export type Product = TODO;
+export type Product = {
+    id: number,
+    manufacturer: string,
+    category: string,
+    images: Array<string>,
+    vehicles: Array<number>,
+    cheapest: Offer,
+    offers: Array<Offer>
+};
 
 export type ProductFilter = TODO;
 

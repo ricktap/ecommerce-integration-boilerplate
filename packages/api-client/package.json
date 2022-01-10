@@ -1,5 +1,5 @@
 {
-  "name": "@vue-storefront/__replace_me__-api",
+  "name": "@vue-storefront/vsfDapPim-api",
   "version": "0.0.1",
   "private": true,
   "sideEffects": false,
@@ -17,7 +17,8 @@
     "update:update": "ncu -u"
   },
   "dependencies": {
-    "@vue-storefront/core": "~2.5.3"
+    "@vue-storefront/core": "~2.5.3",
+    "axios": "^0.24.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.6",

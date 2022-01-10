@@ -8,23 +8,42 @@ import {
   AgnosticBreadcrumb,
   AgnosticFacet
 } from '@vue-storefront/core';
-import type { Facet, FacetSearchCriteria } from '@vue-storefront/__replace_me__-api';
+import type { Facet, FacetSearchCriteria } from '@vue-storefront/vsfDapPim-api';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getAll(params: FacetSearchResult<Facet>, criteria?: FacetSearchCriteria): AgnosticFacet[] {
-  return [];
+  return [
+    {
+      type: 'select',
+      value: 'Bosch',
+      id: '1'
+    }
+  ];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getGrouped(params: FacetSearchResult<Facet>, criteria?: FacetSearchCriteria): AgnosticGroupedFacet[] {
-  return [];
+  return [
+  ];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getSortOptions(params: FacetSearchResult<Facet>): AgnosticSort {
+  console.log(params)
   return {
-    options: [],
-    selected: ''
+    options: [
+      {
+        type: 'name_asc',
+        id: '1',
+        value: 'Name (asc)'
+      },
+      {
+        type: 'name_desc',
+        id: '2',
+        value: 'Name (desc)'
+      }
+    ],
+    selected: '' + params.input.sortBy
   };
 }
 
@@ -40,26 +59,10 @@ function getCategoryTree(params: FacetSearchResult<Facet>): AgnosticCategoryTree
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getProducts(params: FacetSearchResult<Facet>): any {
-  return [
-    {
-      _id: 1,
-      _description: 'Some description',
-      _categoriesRef: [
-        '1',
-        '2'
-      ],
-      name: 'Black jacket',
-      sku: 'black-jacket',
-      images: [
-        'https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg'
-      ],
-      price: {
-        original: 12.34,
-        current: 10.00
-      }
-    }
-  ];
+function getProducts(params: FacetSearchResult<Facet> | any): any {  
+  return params.data.products.sort((a, b) => {
+    return ((params.input.sortBy == 2) ? -1 : 1) * (`${a.manufacturer} ${a.category}`).localeCompare(`${b.manufacturer} ${b.category}`)
+  });
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
